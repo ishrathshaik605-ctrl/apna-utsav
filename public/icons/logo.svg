@@ -1,0 +1,111 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+  <defs>
+    <!-- Background Luxury Gradient -->
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#312E81" />
+      <stop offset="50%" stop-color="#1E1B4B" />
+      <stop offset="100%" stop-color="#0F0E26" />
+    </linearGradient>
+
+    <!-- Golden Rim Gradient -->
+    <linearGradient id="goldRim" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FDE68A" />
+      <stop offset="30%" stop-color="#F59E0B" />
+      <stop offset="70%" stop-color="#D97706" />
+      <stop offset="100%" stop-color="#78350F" />
+    </linearGradient>
+
+    <!-- Sacred Diya Flame Gradient -->
+    <linearGradient id="flameGrad" x1="0%" y1="100%" x2="0%" y2="0%">
+      <stop offset="0%" stop-color="#BE123C" />
+      <stop offset="35%" stop-color="#E11D48" />
+      <stop offset="70%" stop-color="#F59E0B" />
+      <stop offset="90%" stop-color="#FDE68A" />
+      <stop offset="100%" stop-color="#FFFFFF" />
+    </linearGradient>
+
+    <!-- Inner Core Flame -->
+    <linearGradient id="innerFlame" x1="0%" y1="100%" x2="0%" y2="0%">
+      <stop offset="0%" stop-color="#F59E0B" />
+      <stop offset="50%" stop-color="#FEF08A" />
+      <stop offset="100%" stop-color="#FFFFFF" />
+    </linearGradient>
+
+    <!-- Brass Urli / Bowl Base Gradient -->
+    <linearGradient id="brassBowl" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#92400E" />
+      <stop offset="25%" stop-color="#F59E0B" />
+      <stop offset="50%" stop-color="#FEF3C7" />
+      <stop offset="75%" stop-color="#F59E0B" />
+      <stop offset="100%" stop-color="#78350F" />
+    </linearGradient>
+
+    <!-- Soft Glow Filter -->
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="16" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+  </defs>
+
+  <!-- Squircle Emblem Container (Apple-grade shape) -->
+  <rect x="16" y="16" width="480" height="480" rx="120" fill="url(#bgGrad)" stroke="url(#goldRim)" stroke-width="4" />
+
+  <!-- Subtle Festive Mandala Ray Background Pattern -->
+  <g opacity="0.08" stroke="#FFFFFF" stroke-width="2">
+    <circle cx="256" cy="270" r="160" fill="none" stroke-dasharray="8 8" />
+    <circle cx="256" cy="270" r="110" fill="none" />
+    <line x1="256" y1="110" x2="256" y2="430" />
+    <line x1="96" y1="270" x2="416" y2="270" />
+    <line x1="142" y1="156" x2="370" y2="384" />
+    <line x1="142" y1="384" x2="370" y2="156" />
+  </g>
+
+  <!-- Ambient Flame Glow Behind -->
+  <ellipse cx="256" cy="220" rx="90" ry="110" fill="#F59E0B" opacity="0.25" filter="url(#glow)" />
+
+  <!-- Sacred Diya Main Flame (Golden Ratio Teardrop Silhouette) -->
+  <path d="M256 100 
+           C275 160 336 210 336 265 
+           C336 315 298 350 256 350 
+           C214 350 176 315 176 265 
+           C176 210 237 160 256 100 Z" 
+        fill="url(#flameGrad)" />
+
+  <!-- Inner Radiant Flame Core -->
+  <path d="M256 150 
+           C268 190 302 225 302 265 
+           C302 295 282 320 256 320 
+           C230 320 210 295 210 265 
+           C210 225 244 190 256 150 Z" 
+        fill="url(#innerFlame)" opacity="0.92" />
+
+  <!-- Center White-Hot Core Light -->
+  <ellipse cx="256" cy="265" rx="22" ry="36" fill="#FFFFFF" opacity="0.95" />
+
+  <!-- Auspicious Brass Urli Bowl (Base) -->
+  <path d="M136 295 
+           C140 375 372 375 376 295 
+           C360 310 310 325 256 325 
+           C202 325 152 310 136 295 Z" 
+        fill="url(#brassBowl)" />
+
+  <!-- Urli Rim Edge -->
+  <ellipse cx="256" cy="295" rx="120" ry="16" fill="url(#goldRim)" />
+  <ellipse cx="256" cy="295" rx="114" ry="12" fill="#78350F" opacity="0.6" />
+
+  <!-- Lotus Petal Flourish Accents at Bowl Base -->
+  <path d="M220 365 C240 388 272 388 292 365 C275 375 237 375 220 365 Z" fill="url(#goldRim)" />
+
+  <!-- Modern Celebration Sparks (✨) -->
+  <!-- Top Right AI / Celebration Sparkle -->
+  <path d="M370 120 Q370 140 390 140 Q370 140 370 160 Q370 140 350 140 Q370 140 370 120 Z" fill="#FDE68A" />
+  <circle cx="370" cy="140" r="3" fill="#FFFFFF" />
+
+  <!-- Left Floating Sparkle -->
+  <path d="M130 190 Q130 202 142 202 Q130 202 130 214 Q130 202 118 202 Q130 202 130 190 Z" fill="#F59E0B" opacity="0.85" />
+
+  <!-- Small Ambient Stardust -->
+  <circle cx="160" cy="130" r="3.5" fill="#FEF08A" opacity="0.75" />
+  <circle cx="355" cy="230" r="3" fill="#FEF08A" opacity="0.75" />
+  <circle cx="395" cy="180" r="2.5" fill="#FFFFFF" opacity="0.8" />
+</svg>

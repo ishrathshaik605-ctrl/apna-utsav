@@ -1,0 +1,145 @@
+/* ==========================================================================
+   Apna Utsav 2.0 - Design Tokens (Champagne & Royal Indigo Theme)
+   WCAG 2.2 AA Verified Contrast | Clean Mobile-First Aesthetic
+   ========================================================================== */
+
+:root {
+  /* --- Brand & Accent Colors (Light Theme: Clean Champagne & Royal Indigo) --- */
+  --color-primary: #3730A3;               /* Royal Indigo 800 - Deep, elegant, authoritative */
+  --color-primary-hover: #312E81;         /* Indigo 900 */
+  --color-primary-light: #EEF2FF;         /* Soft Indigo Tint 50 */
+  --color-primary-container: #E0E7FF;     /* Indigo 100 */
+  --color-on-primary: #FFFFFF;            /* White on Indigo (Contrast > 8.5:1 - AAA) */
+  --color-on-primary-container: #1E1B4B;  /* Deep Indigo text on container */
+
+  --color-secondary: #BE123C;             /* Celebratory Rose 700 - Warm, festive */
+  --color-secondary-hover: #9F1239;
+  --color-secondary-light: #FFF1F2;
+  --color-on-secondary: #FFFFFF;
+
+  --color-gold: #B45309;                  /* Warm Marigold Gold / Amber 700 */
+  --color-gold-light: #FEF3C7;            /* Champagne / Gold Tint */
+  --color-on-gold: #FFFFFF;
+
+  /* --- Surfaces & Backgrounds --- */
+  --color-bg: #FAF9F6;                    /* Warm Alabaster Champagne - Soft on eyes */
+  --color-surface: #FFFFFF;               /* Clean white card surface */
+  --color-surface-hover: #F8FAFC;
+  --color-surface-elevated: #FFFFFF;
+  --color-surface-subtle: #F3F4F6;        /* Subtle divider/input fill */
+
+  /* --- Typography --- */
+  --color-text-primary: #111827;          /* High contrast near-black (Contrast > 15:1 - AAA) */
+  --color-text-secondary: #4B5563;        /* Slate gray for secondary details */
+  --color-text-muted: #6B7280;            /* Gentle helper text */
+  --color-text-inverse: #FFFFFF;
+
+  /* --- Borders & Dividers --- */
+  --color-border: #E5E7EB;                /* Crisp delicate border */
+  --color-border-focus: #3730A3;
+  --color-border-subtle: #F3F4F6;
+
+  /* --- Functional Status Colors --- */
+  --color-success: #15803D;               /* Green 700 */
+  --color-success-bg: #ECFDF5;
+  --color-warning: #B45309;               /* Amber 700 */
+  --color-warning-bg: #FFFBEB;
+  --color-error: #B91C1C;                 /* Red 700 */
+  --color-error-bg: #FEF2F2;
+
+  /* --- Chart Palette (Colorblind safe 8-color set) --- */
+  --chart-1: #3730A3;
+  --chart-2: #BE123C;
+  --chart-3: #B45309;
+  --chart-4: #047857;
+  --chart-5: #6D28D9;
+  --chart-6: #0369A1;
+  --chart-7: #4D7C0F;
+  --chart-8: #9D174D;
+
+  /* --- Typography Scale --- */
+  --font-family: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-size-xs: 0.75rem;    /* 12px */
+  --font-size-sm: 0.875rem;   /* 14px */
+  --font-size-base: 1rem;     /* 16px */
+  --font-size-lg: 1.125rem;   /* 18px */
+  --font-size-xl: 1.25rem;    /* 20px */
+  --font-size-2xl: 1.5rem;    /* 24px */
+  --font-size-3xl: 1.875rem;  /* 30px */
+
+  --line-height-base: 1.5;
+  --line-height-indic: 1.65;  /* Essential spacing for Devanagari, Telugu, Tamil, Kannada diacritics */
+
+  /* --- Radii & Shadows (Organic, Apple-style curves) --- */
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+  --radius-xl: 28px;
+  --radius-full: 9999px;
+
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 12px -1px rgba(55, 48, 163, 0.08), 0 2px 6px -1px rgba(0, 0, 0, 0.04);
+  --shadow-lg: 0 12px 28px -4px rgba(55, 48, 163, 0.12), 0 4px 10px -2px rgba(0, 0, 0, 0.05);
+  --shadow-drawer: 8px 0 32px rgba(0, 0, 0, 0.16);
+
+  /* --- Transitions & Mobile Touch --- */
+  --ease-smooth: cubic-bezier(0.16, 1, 0.3, 1);
+  --duration-fast: 150ms;
+  --duration-normal: 250ms;
+  --min-touch-target: 48px;
+}
+
+/* --- Dark Theme Tokens (Sleek Midnight & Warm Gold) --- */
+[data-theme='dark'] {
+  --color-primary: #818CF8;               /* Indigo 400 */
+  --color-primary-hover: #A5B4FC;
+  --color-primary-light: #1E1B4B;
+  --color-primary-container: #282463;
+  --color-on-primary: #0F0E26;
+  --color-on-primary-container: #E0E7FF;
+
+  --color-secondary: #FB7185;             /* Rose 400 */
+  --color-secondary-hover: #FDA4AF;
+  --color-secondary-light: #4C0519;
+  --color-on-secondary: #4C0519;
+
+  --color-gold: #FBBF24;                  /* Amber 400 */
+  --color-gold-light: #451A03;
+  --color-on-gold: #1F2937;
+
+  --color-bg: #0D0C1D;                    /* Deep Midnight */
+  --color-surface: #17152E;               /* Midnight Card Surface */
+  --color-surface-hover: #1F1D3D;
+  --color-surface-elevated: #242247;
+  --color-surface-subtle: #1F1D3D;
+
+  --color-text-primary: #F3F4F6;
+  --color-text-secondary: #D1D5DB;
+  --color-text-muted: #9CA3AF;
+  --color-text-inverse: #111827;
+
+  --color-border: #2A2750;
+  --color-border-focus: #818CF8;
+  --color-border-subtle: #1F1D3D;
+
+  --color-success: #34D399;
+  --color-success-bg: #064E3B;
+  --color-warning: #FBBF24;
+  --color-warning-bg: #451A03;
+  --color-error: #F87171;
+  --color-error-bg: #450A0A;
+
+  --shadow-md: 0 4px 14px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.6);
+  --shadow-drawer: 8px 0 32px rgba(0, 0, 0, 0.7);
+}
+
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

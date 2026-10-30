@@ -1,0 +1,38 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "ApnaUtsavResponse",
+  "type": "object",
+  "required": ["message"],
+  "properties": {
+    "message": {
+      "type": "string",
+      "description": "User-facing reply in the user's selected language, formatted with simple markdown if helpful."
+    },
+    "assumptions": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Any assumptions made when planning without complete details."
+    },
+    "actions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["type", "payload"],
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": ["SET_BUDGET_SPLIT", "ADD_TASKS", "ADD_IDEAS", "ASK"]
+          },
+          "payload": {
+            "type": "object"
+          }
+        }
+      }
+    },
+    "warnings": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Budget, timeline, safety, or logistical warnings."
+    }
+  }
+}

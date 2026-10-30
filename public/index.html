@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
+  <title>Apna Utsav - Intelligent Celebration Planner</title>
+  <meta name="description" content="Culturally aware, mobile-first celebration and event planner for weddings, birthdays, and festivals in India." />
+  <meta name="theme-color" content="#3730A3" />
+
+  <!-- PWA Manifest & App Icons -->
+  <link rel="manifest" href="/manifest.json" />
+  <link rel="icon" type="image/svg+xml" href="/icons/icon-192.svg" />
+  <link rel="apple-touch-icon" href="/icons/icon-192.svg" />
+
+  <!-- Typography: Plus Jakarta Sans & Inter with Indic Support -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet" />
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="/css/tokens.css" />
+  <link rel="stylesheet" href="/css/styles.css" />
+</head>
+<body>
+  <!-- Accessible Skip to Content Link -->
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <!-- Top Navigation Header -->
+  <header class="app-header" role="banner">
+    <div class="header-container">
+      <div class="header-left">
+        <!-- Google Gemini Style ☰ Menu Button -->
+        <button class="icon-btn" id="btn-drawer-open" aria-label="Open menu" aria-expanded="false" title="Menu">
+          <span id="menu-icon-placeholder"></span>
+        </button>
+
+        <a href="#dashboard" class="header-brand" id="brand-link" aria-label="Apna Utsav Home">
+          <div class="brand-symbol">
+            <img src="/icons/logo.svg" alt="Apna Utsav Royal Diya Emblem" width="38" height="38" style="display:block; border-radius:10px;" />
+          </div>
+          <span class="brand-name" id="app-brand-name">Apna Utsav</span>
+        </a>
+      </div>
+
+      <div class="header-right">
+        <!-- Event Settings Button (Always accessible to tweak parameters) -->
+        <button class="icon-btn" id="btn-header-settings" aria-label="Event settings" title="Event Settings">
+          <span id="settings-icon-placeholder"></span>
+        </button>
+
+        <!-- Theme Toggle (Clean Light / Midnight Dark) -->
+        <button class="icon-btn" id="btn-theme-toggle" aria-label="Toggle theme" title="Toggle theme">
+          <span id="theme-icon-placeholder"></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Left-Side Gemini Style Navigation Drawer -->
+  <div class="drawer-backdrop" id="drawer-backdrop" aria-hidden="true">
+    <aside class="drawer-panel" id="drawer-panel" role="dialog" aria-modal="true" aria-label="Main Navigation">
+      <div class="drawer-header">
+        <div style="display:flex; align-items:center; gap:10px;">
+          <div class="brand-symbol" style="width:32px; height:32px;">
+            <img src="/icons/logo.svg" alt="Apna Utsav Royal Diya Emblem" width="32" height="32" style="display:block; border-radius:8px;" />
+          </div>
+          <div>
+            <strong style="font-size:var(--font-size-sm); display:block;">Apna Utsav</strong>
+            <small style="color:var(--color-text-muted); font-size:11px;" id="drawer-plan-status">No active plan</small>
+          </div>
+        </div>
+        <button class="icon-btn-sm" id="btn-drawer-close" aria-label="Close menu">
+          <span id="close-icon-placeholder"></span>
+        </button>
+      </div>
+
+      <nav class="drawer-nav-list" id="drawer-nav-links">
+        <a href="#dashboard" class="drawer-item active" data-tab="dashboard">
+          <span class="nav-icon-slot" data-icon="dashboard"></span>
+          <span data-i18n="navDashboard">Dashboard</span>
+        </a>
+        <a href="#budget" class="drawer-item" data-tab="budget">
+          <span class="nav-icon-slot" data-icon="budget"></span>
+          <span data-i18n="navBudget">Budget</span>
+        </a>
+        <a href="#timeline" class="drawer-item" data-tab="timeline">
+          <span class="nav-icon-slot" data-icon="timeline"></span>
+          <span data-i18n="navTimeline">Timeline</span>
+        </a>
+        <a href="#vendors" class="drawer-item" data-tab="vendors">
+          <span class="nav-icon-slot" data-icon="vendors"></span>
+          <span data-i18n="navVendors">Vendors</span>
+        </a>
+        <a href="#ideas" class="drawer-item" data-tab="ideas">
+          <span class="nav-icon-slot" data-icon="ideas"></span>
+          <span data-i18n="navIdeas">Ideas & Moodboard</span>
+        </a>
+        <a href="#settings" class="drawer-item" data-tab="settings">
+          <span class="nav-icon-slot" data-icon="settings"></span>
+          <span data-i18n="navSettings">Settings</span>
+        </a>
+      </nav>
+
+      <!-- Multi-Event Celebrations Manager Section -->
+      <div class="drawer-events-section" id="drawer-events-section">
+        <div class="drawer-events-header">
+          <span class="drawer-section-title">My Celebrations</span>
+          <button type="button" class="icon-btn-sm" id="btn-drawer-add-event" aria-label="Add Another Celebration" title="Plan Another Celebration">
+            <span id="drawer-add-icon-slot"></span>
+          </button>
+        </div>
+        <div class="drawer-events-list" id="drawer-events-list" role="list" aria-label="List of Celebrations">
+          <!-- Dynamically populated events list with active indicator -->
+        </div>
+      </div>
+
+      <div class="drawer-footer">
+        <button class="btn btn-primary btn-sm" id="btn-drawer-plan-another" style="width:100%; margin-bottom:8px;">
+          <span id="plan-another-icon-slot"></span>
+          <span>+ Plan Another Celebration</span>
+        </button>
+        <button class="btn btn-ghost btn-sm" id="btn-drawer-clear-all" style="width:100%; color:var(--color-text-muted); font-size:12px;">
+          <span id="reset-icon-slot"></span>
+          <span>Reset All Data</span>
+        </button>
+      </div>
+    </aside>
+  </div>
+
+  <!-- Main Application Content Viewport -->
+  <main id="main-content" class="main-wrapper" role="main" tabindex="-1">
+    <div id="view-container"></div>
+  </main>
+
+  <!-- Floating Voice Chat Board Action Button -->
+  <button class="floating-assistant-btn" id="btn-open-voice-board" aria-haspopup="dialog" aria-expanded="false">
+    <span id="fab-mic-icon-slot"></span>
+    <span data-i18n="chatWithAI">Ask Doubts</span>
+  </button>
+
+  <!-- Voice Chat Board Sheet Modal -->
+  <div class="chat-sheet-backdrop" id="chat-sheet-modal" role="dialog" aria-modal="true" aria-labelledby="chat-sheet-title" aria-hidden="true">
+    <div class="chat-sheet-window">
+      <div class="chat-sheet-header">
+        <div style="display:flex; align-items:center; gap:8px;">
+          <span id="chat-sparkles-slot"></span>
+          <div>
+            <h2 id="chat-sheet-title" style="font-size:var(--font-size-sm); font-weight:700;">Apna Utsav AI Assistant</h2>
+            <p style="font-size:11px; color:var(--color-text-muted);" data-i18n="aiDisclosure">AI estimates. Verify details directly with vendors.</p>
+          </div>
+        </div>
+        <button class="icon-btn-sm" id="btn-close-voice-board" aria-label="Close Assistant">
+          <span id="chat-close-icon-slot"></span>
+        </button>
+      </div>
+
+      <div class="chat-messages-container" id="chat-messages-list" role="log" aria-live="polite">
+        <!-- Messages appear here -->
+      </div>
+
+      <div class="chat-sheet-footer">
+        <!-- Live transcription state feedback -->
+        <div id="voice-status-indicator" style="display:none; font-size:11px; color:var(--color-secondary); font-weight:700; margin-bottom:6px;">
+          🎙️ Listening to your voice... Speak clearly.
+        </div>
+
+        <!-- Quick Doubts Suggestions Scroll -->
+        <div class="chat-quick-suggestions" id="chat-doubt-chips">
+          <button class="quick-suggestion-chip" data-doubt="What essential questions should I ask my caterer before booking?">🍲 Caterer questions</button>
+          <button class="quick-suggestion-chip" data-doubt="How can I optimize and save ₹30,000 on decor safely?">💡 How to save on decor?</button>
+          <button class="quick-suggestion-chip" data-doubt="What is the standard advance payment norm for venues?">🏢 Venue advance norms</button>
+          <button class="quick-suggestion-chip" data-doubt="What permits do I need for sound and loudspeakers?">🔊 Loudspeaker permits</button>
+        </div>
+
+        <form class="chat-input-bar" id="chat-voice-form">
+          <button type="button" class="icon-btn" id="btn-voice-mic" aria-label="Speak with voice" title="Voice Input">
+            <span id="voice-mic-icon-slot"></span>
+          </button>
+          <input type="text" id="chat-input" class="form-control" placeholder="Ask any doubt or speak with mic..." autocomplete="off" />
+          <button type="submit" class="btn btn-primary btn-sm" aria-label="Send doubt" style="border-radius:var(--radius-full); min-width:44px; padding:0;">
+            <span id="send-icon-slot"></span>
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Event Setup & Settings Sheet Modal -->
+  <div class="modal-overlay" id="settings-modal-overlay" role="dialog" aria-modal="true" aria-labelledby="settings-modal-title" aria-hidden="true">
+    <div class="modal-sheet-panel">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:18px;">
+        <h2 id="settings-modal-title" style="font-size:var(--font-size-lg);">Event Setup & Settings</h2>
+        <button class="icon-btn-sm" id="btn-close-settings-modal" aria-label="Close settings">
+          <span id="settings-close-icon-slot"></span>
+        </button>
+      </div>
+
+      <form id="event-settings-form" novalidate>
+        <div class="form-field">
+          <label class="form-label" for="field-event-title">Celebration Title</label>
+          <input type="text" id="field-event-title" class="form-control" />
+        </div>
+
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
+          <div class="form-field">
+            <label class="form-label" for="field-event-city">City</label>
+            <input type="text" id="field-event-city" class="form-control" />
+          </div>
+          <div class="form-field">
+            <label class="form-label" for="field-event-date">Target Date</label>
+            <input type="date" id="field-event-date" class="form-control" />
+          </div>
+        </div>
+
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
+          <div class="form-field">
+            <label class="form-label" for="field-guest-count">Guest Count</label>
+            <input type="number" id="field-guest-count" class="form-control" min="1" max="10000" />
+          </div>
+          <div class="form-field">
+            <label class="form-label" for="field-total-budget">Total Budget (₹)</label>
+            <input type="number" id="field-total-budget" class="form-control" step="50" min="100" placeholder="e.g. 1000" />
+            <small style="font-size:11px; color:var(--color-text-muted); display:block; margin-top:4px;">Supports all celebration budgets from ₹100 upwards (PG bashes to grand weddings).</small>
+          </div>
+        </div>
+
+        <!-- Venue Requirement Selection (Home/PG vs Rented Hall) -->
+        <div class="form-field" style="margin-top:6px; margin-bottom:12px; background:var(--color-surface-subtle); padding:12px; border-radius:var(--radius-md); border:1px solid var(--color-border);">
+          <label class="form-label" style="margin-bottom:8px; font-weight:700;">Do you need to rent a venue?</label>
+          <div style="display:flex; flex-direction:column; gap:8px;">
+            <label style="display:flex; align-items:center; gap:8px; font-size:var(--font-size-sm); cursor:pointer;">
+              <input type="radio" name="field-needs-venue" value="no" id="venue-opt-no" checked />
+              <span>🏠 <strong>No</strong> — Celebrating at PG, Hostel room, or Home (₹0 Venue Rent)</span>
+            </label>
+            <label style="display:flex; align-items:center; gap:8px; font-size:var(--font-size-sm); cursor:pointer;">
+              <input type="radio" name="field-needs-venue" value="yes" id="venue-opt-yes" />
+              <span>🏢 <strong>Yes</strong> — Need to rent a Banquet Hall, Party Hall, or Lawn</span>
+            </label>
+          </div>
+        </div>
+
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
+          <div class="form-field">
+            <label class="form-label" for="field-language">Language</label>
+            <select id="field-language" class="form-control">
+              <option value="en">English</option>
+              <option value="hi">हिन्दी (Hindi)</option>
+              <option value="te">తెలుగు (Telugu)</option>
+              <option value="kn">ಕನ್ನಡ (Kannada)</option>
+              <option value="ta">தமிழ் (Tamil)</option>
+            </select>
+          </div>
+          <div class="form-field">
+            <label class="form-label" for="field-currency">Currency</label>
+            <select id="field-currency" class="form-control">
+              <option value="INR">₹ (INR)</option>
+              <option value="USD">$ (USD)</option>
+              <option value="AED">AED</option>
+              <option value="GBP">£ (GBP)</option>
+            </select>
+          </div>
+        </div>
+
+        <div style="display:flex; justify-content:flex-end; gap:10px; margin-top:20px; padding-top:14px; border-top:1px solid var(--color-border);">
+          <button type="button" class="btn btn-outline" id="btn-cancel-settings">Cancel</button>
+          <button type="submit" class="btn btn-primary">Save Changes</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Plan Another Celebration Sheet Modal -->
+  <div class="modal-overlay" id="add-event-modal-overlay" role="dialog" aria-modal="true" aria-labelledby="add-event-modal-title" aria-hidden="true">
+    <div class="modal-sheet-panel">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;">
+        <div>
+          <h2 id="add-event-modal-title" style="font-size:var(--font-size-lg);">Plan Another Celebration</h2>
+          <p style="font-size:12px; color:var(--color-text-muted); margin-top:2px;">Add a new event without replacing your existing celebration plans.</p>
+        </div>
+        <button class="icon-btn-sm" id="btn-close-add-event-modal" aria-label="Close add event dialog">
+          <span id="add-event-close-icon-slot"></span>
+        </button>
+      </div>
+
+      <form id="add-event-prompt-form" style="margin-bottom:16px;">
+        <div class="prompt-bar-card" style="margin-bottom:12px;">
+          <input type="text" id="add-event-prompt-input" class="prompt-input-field" placeholder="e.g. cousin's Birthday in PG, 4 friends, ₹1000 budget" autocomplete="off" />
+          <button type="button" class="icon-btn" id="btn-add-event-mic" aria-label="Speak your event" title="Voice Input">
+            <span id="add-event-mic-icon-slot"></span>
+          </button>
+          <button type="submit" class="btn btn-primary btn-sm" style="border-radius:var(--radius-full); padding:0 18px;">
+            Create
+          </button>
+        </div>
+      </form>
+
+      <span style="font-size:11px; font-weight:700; color:var(--color-text-muted); text-transform:uppercase; letter-spacing:0.05em; display:block; margin-bottom:8px;">Quick Suggestions:</span>
+      <div class="inspiration-grid" style="grid-template-columns:1fr; gap:8px;">
+        <div class="inspiration-chip-card add-event-suggestion-chip" data-prompt="Cousin's Birthday in Bengaluru PG, 4 friends, ₹1000 budget">
+          <div class="chip-title"><span>🎂</span><strong>PG Birthday Bash (₹1,000)</strong></div>
+          <div class="chip-desc">4 friends in hostel/PG • Cake, biryani, fairy lights & surprise countdown.</div>
+        </div>
+        <div class="inspiration-chip-card add-event-suggestion-chip" data-prompt="Diwali Community Puja & Potluck, 80 residents, ₹50,000 budget in Pune">
+          <div class="chip-title"><span>🪔</span><strong>Diwali Society Utsav (₹50,000)</strong></div>
+          <div class="chip-desc">80 residents • Pandal, mahaprasad, eco-diyas & rangoli competition.</div>
+        </div>
+        <div class="inspiration-chip-card add-event-suggestion-chip" data-prompt="Grand Wedding in Jaipur, 250 guests, ₹15 lakh budget">
+          <div class="chip-title"><span>💍</span><strong>Grand Vivaham & Reception (₹15 Lakh)</strong></div>
+          <div class="chip-desc">250 guests • Kalyana mandapam, traditional feasts, candid photo & sangeet.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Global Toast Feedback Bar -->
+  <div class="toast-bar" id="toast-bar" role="status" aria-live="polite">
+    <span id="toast-message-text">Update saved</span>
+  </div>
+
+  <!-- App Orchestrator Script -->
+  <script type="module" src="/js/app.js"></script>
+
+  <!-- PWA Service Worker Registration with Instant Cache Purge -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js?v=4').then(reg => {
+          reg.update();
+        }).catch(err => {
+          console.warn('SW register skipped:', err);
+        });
+      });
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,21 @@
+{
+  "name": "apna-utsav",
+  "version": "1.0.0",
+  "description": "Production-quality GenAI Celebration & Event Planner for India (Budget, Timeline, Vendors, Ideas)",
+  "type": "module",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "test": "node --test tests/*.test.js"
+  },
+  "keywords": [
+    "event-planner",
+    "wedding-planner",
+    "budget-planner",
+    "gemini",
+    "genai",
+    "india-celebrations"
+  ],
+  "author": "Apna Utsav Team",
+  "license": "MIT"
+}
