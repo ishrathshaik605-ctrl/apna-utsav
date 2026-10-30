@@ -65,7 +65,7 @@ function isRateLimited(ip) {
 }
 
 // Clean up stale rate limit entries periodically
-setInterval(() => {
+const cleanupTimer = setInterval(() => {
   const now = Date.now();
   for (const [ip, timestamps] of rateLimitMap.entries()) {
     const fresh = timestamps.filter(ts => now - ts < 60000);
@@ -73,6 +73,7 @@ setInterval(() => {
     else rateLimitMap.set(ip, fresh);
   }
 }, 60000);
+if (cleanupTimer.unref) cleanupTimer.unref();
 
 // MIME types for static server
 const MIME_TYPES = {
@@ -422,12 +423,14 @@ const server = http.createServer(async (req, res) => {
   res.end('405 Method Not Allowed');
 });
 
-server.listen(PORT, HOST, () => {
-  console.log(`\n======================================================`);
-  console.log(`🎉  Apna Utsav Server running at http://${HOST}:${PORT}`);
-  console.log(`🔒  Gemini API Key configured: ${Boolean(GEMINI_API_KEY && GEMINI_API_KEY !== 'your_gemini_api_key_here')}`);
-  console.log(`📱  Mobile-First Celebration Planner ready`);
-  console.log(`======================================================\n`);
-});
+if (!process.env.VERCEL) {
+  server.listen(PORT, HOST, () => {
+    console.log(`\n======================================================`);
+    console.log(`🎉  Apna Utsav Server running at http://${HOST}:${PORT}`);
+    console.log(`🔒  Gemini API Key configured: ${Boolean(GEMINI_API_KEY && GEMINI_API_KEY !== 'your_gemini_api_key_here')}`);
+    console.log(`📱  Mobile-First Celebration Planner ready`);
+    console.log(`======================================================\n`);
+  });
+}
 
 export default server;
