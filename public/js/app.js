@@ -635,44 +635,44 @@ class App {
           ${getIcon('sparkles')} ${APP_CONFIG.NAME}
         </span>
         <h1 class="welcome-heading">${getTranslation(lang, 'welcomeTitle')}</h1>
-        <p class="welcome-subheading">Choose our simple guided setup or describe your event with voice/text.</p>
+        <p class="welcome-subheading">${getTranslation(lang, 'welcomeSubtitleGuided')}</p>
 
         <!-- Mode Switcher Tabs: Guided Form vs AI Prompt -->
         <div class="welcome-tabs-bar" role="tablist">
           <button type="button" class="btn btn-sm btn-primary" id="btn-mode-guided" style="border-radius:var(--radius-full); padding:6px 18px; font-size:12px;">
-            📋 Step-by-Step Guided Setup
+            ${getTranslation(lang, 'guidedTab')}
           </button>
           <button type="button" class="btn btn-sm btn-ghost" id="btn-mode-ai" style="border-radius:var(--radius-full); padding:6px 18px; font-size:12px;">
-            ✨ AI Prompt & Voice Mic
+            ${getTranslation(lang, 'aiPromptTab')}
           </button>
         </div>
 
         <!-- 1. Guided Setup Form (Default for all users) -->
         <div class="guided-builder-card" id="panel-guided-setup">
           <!-- Step 1: Celebration Type -->
-          <span class="guided-step-label">1. Choose Celebration Type</span>
+          <span class="guided-step-label">${getTranslation(lang, 'stepEventType')}</span>
           <div class="guided-type-grid" id="guided-type-selector">
             <button type="button" class="guided-type-btn active" data-type="birthday">
               <span class="emoji">🎂</span>
-              <span>Birthday</span>
+              <span>${getTranslation(lang, 'typeBirthday')}</span>
             </button>
             <button type="button" class="guided-type-btn" data-type="wedding">
               <span class="emoji">💍</span>
-              <span>Wedding</span>
+              <span>${getTranslation(lang, 'typeWedding')}</span>
             </button>
             <button type="button" class="guided-type-btn" data-type="housewarming">
               <span class="emoji">🪔</span>
-              <span>Griha Pravesh</span>
+              <span>${getTranslation(lang, 'typePuja')}</span>
             </button>
             <button type="button" class="guided-type-btn" data-type="community">
               <span class="emoji">🎉</span>
-              <span>Community Utsav</span>
+              <span>${getTranslation(lang, 'typeCommunity')}</span>
             </button>
           </div>
 
           <!-- Step 2: City / Location -->
           <div style="margin-bottom:16px;">
-            <label for="guided-field-city" class="guided-step-label">2. City / Location</label>
+            <label for="guided-field-city" class="guided-step-label">${getTranslation(lang, 'stepCity')}</label>
             <input type="text" id="guided-field-city" class="form-control" value="Hyderabad" list="indian-cities-list" placeholder="e.g. Hyderabad, Bengaluru, Jaipur..." style="font-size:var(--font-size-sm); padding:10px 12px; width:100%; border-radius:var(--radius-md);" />
             <datalist id="indian-cities-list">
               <option value="Hyderabad"></option>
@@ -689,7 +689,7 @@ class App {
           <!-- Step 3: Guests & Budget Grid -->
           <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:16px; margin-bottom:16px;">
             <div>
-              <label for="guided-field-guests" class="guided-step-label">3. Number of Guests</label>
+              <label for="guided-field-guests" class="guided-step-label">${getTranslation(lang, 'stepGuests')}</label>
               <input type="number" id="guided-field-guests" class="form-control" value="25" min="1" max="5000" style="font-size:var(--font-size-sm); padding:10px 12px; width:100%; border-radius:var(--radius-md);" />
               <div class="guided-quick-pills" id="pills-guests">
                 <span class="guided-pill" data-val="4">4 (PG Room)</span>
@@ -701,7 +701,7 @@ class App {
             </div>
 
             <div>
-              <label for="guided-field-budget" class="guided-step-label">4. Total Budget (₹)</label>
+              <label for="guided-field-budget" class="guided-step-label">${getTranslation(lang, 'stepBudget')}</label>
               <input type="number" id="guided-field-budget" class="form-control" value="15000" min="100" step="50" style="font-size:var(--font-size-sm); padding:10px 12px; width:100%; border-radius:var(--radius-md);" />
               <div class="guided-quick-pills" id="pills-budget">
                 <span class="guided-pill" data-val="1000">₹1,000 (PG)</span>
@@ -715,20 +715,20 @@ class App {
 
           <!-- Step 4: Venue Requirement -->
           <div style="margin-bottom:20px;">
-            <span class="guided-step-label">5. Venue Requirement</span>
+            <span class="guided-step-label">${getTranslation(lang, 'stepVenue')}</span>
             <div style="display:flex; gap:10px; flex-wrap:wrap;">
               <button type="button" class="btn btn-primary btn-sm" id="guided-venue-no" style="flex:1; border-radius:var(--radius-md); padding:10px; font-weight:600;">
-                🏠 No Venue (Home/PG/Own Space)
+                ${getTranslation(lang, 'venueNo')}
               </button>
               <button type="button" class="btn btn-outline btn-sm" id="guided-venue-yes" style="flex:1; border-radius:var(--radius-md); padding:10px; font-weight:600;">
-                🏢 Rent a Venue (Hall/Mandapam)
+                ${getTranslation(lang, 'venueYes')}
               </button>
             </div>
           </div>
 
           <!-- Submit Button -->
           <button type="button" class="btn btn-primary" id="btn-create-guided-plan" style="width:100%; padding:14px; font-size:var(--font-size-sm); font-weight:700; border-radius:var(--radius-md); justify-content:center;">
-            🎉 Create Celebration Plan ➔
+            ${getTranslation(lang, 'btnGeneratePlan')}
           </button>
         </div>
 
@@ -747,7 +747,7 @@ class App {
 
           <!-- Inspiration Starter Cards -->
           <div class="inspiration-section">
-            <span class="inspiration-label">Or Tap an Inspiration Starter:</span>
+            <span class="inspiration-label">${getTranslation(lang, 'orInspiration')}</span>
             <div class="inspiration-grid">
               ${APP_CONFIG.INSPIRATION_CHIPS.map(chip => `
                 <div class="inspiration-chip-card" data-prompt="${chip.prompt}">
@@ -1148,7 +1148,7 @@ class App {
         <div class="event-switcher-strip">
           <div class="event-switcher-left">
             <span style="color:var(--color-primary);">${getIcon('switch_event')}</span>
-            <span style="font-size:var(--font-size-xs); font-weight:700; color:var(--color-text-muted);">EVENT:</span>
+            <span style="font-size:var(--font-size-xs); font-weight:700; color:var(--color-text-muted);">${getTranslation(lang, 'eventBadge')}</span>
             <select class="event-switcher-select" id="dashboard-event-switcher" aria-label="Switch celebration">
               ${events.map(evt => `
                 <option value="${evt.id}" ${evt.id === activeId ? 'selected' : ''}>
@@ -1158,7 +1158,7 @@ class App {
             </select>
           </div>
           <button type="button" class="btn btn-outline btn-sm" id="btn-dashboard-plan-another" style="gap:6px;">
-            ${getIcon('add')} + Plan Another Event
+            ${getIcon('add')} ${getTranslation(lang, 'planAnother')}
           </button>
         </div>
 
@@ -1166,11 +1166,11 @@ class App {
         <div class="plan-hero-banner">
           <div>
             <div style="display:inline-flex; align-items:center; gap:6px; padding:4px 10px; background:var(--color-primary-light); color:var(--color-primary); border-radius:var(--radius-full); font-size:var(--font-size-xs); font-weight:700; text-transform:uppercase; margin-bottom:8px;">
-              ${event.type.toUpperCase()} • ${event.city} • ${event.needsVenue === false ? '🏠 Own Space (PG/Home)' : '🏢 Rented Venue'}
+              ${event.type.toUpperCase()} • ${event.city} • ${event.needsVenue === false ? getTranslation(lang, 'venueNo') : getTranslation(lang, 'venueYes')}
             </div>
             <h1 style="font-size:clamp(1.4rem, 3vw, 1.85rem); margin-bottom:6px;">${event.title}</h1>
             <p style="font-size:var(--font-size-sm); color:var(--color-text-secondary);">
-              📅 ${new Date(event.date).toLocaleDateString(undefined, { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' })} • 👥 ${event.guestCount} Guests
+              📅 ${new Date(event.date).toLocaleDateString(undefined, { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' })} • 👥 ${event.guestCount} ${getTranslation(lang, 'guestsLabel')}
             </p>
 
             <div style="display:flex; flex-wrap:wrap; gap:16px; margin-top:16px;">
@@ -1219,10 +1219,10 @@ class App {
                 <div class="progress-bar-fill ${stats.isOverBudget ? 'over-limit' : ''}" style="width:${Math.min(100, stats.spentPercent)}%;"></div>
               </div>
               <p style="font-size:var(--font-size-xs); color:var(--color-text-muted); margin-bottom:12px;">
-                Remaining: ${formatCurrency(stats.remaining, event.currency)}
+                ${getTranslation(lang, 'remaining')}: ${formatCurrency(stats.remaining, event.currency)}
               </p>
             </div>
-            <a href="#budget" class="btn btn-subtle btn-sm" style="width:100%;">View Budget Split ${getIcon('chevron_right')}</a>
+            <a href="#budget" class="btn btn-subtle btn-sm" style="width:100%;">${getTranslation(lang, 'viewBudget')} ${getIcon('chevron_right')}</a>
           </div>
 
           <!-- Timeline -->
@@ -1237,10 +1237,10 @@ class App {
                 <div class="progress-bar-fill" style="width:${tasksPct}%; background-color:var(--color-secondary);"></div>
               </div>
               <p style="font-size:var(--font-size-xs); color:var(--color-text-muted); margin-bottom:12px;">
-                ${tasksDone} of ${tasks.length} tasks completed
+                ${tasksDone} of ${tasks.length} ${getTranslation(lang, 'tasksCompleted')}
               </p>
             </div>
-            <a href="#timeline" class="btn btn-subtle btn-sm" style="width:100%;">Check Timeline ${getIcon('chevron_right')}</a>
+            <a href="#timeline" class="btn btn-subtle btn-sm" style="width:100%;">${getTranslation(lang, 'checkTimeline')} ${getIcon('chevron_right')}</a>
           </div>
 
           <!-- Vendors -->
@@ -1248,14 +1248,14 @@ class App {
             <div>
               <div style="display:flex; justify-content:space-between; align-items:center;">
                 <span style="color:var(--color-gold);">${getIcon('vendors')}</span>
-                <span style="font-size:var(--font-size-xs); font-weight:700;">${vendors.length} Shortlisted</span>
+                <span style="font-size:var(--font-size-xs); font-weight:700;">${vendors.length} ${getTranslation(lang, 'shortlistedVendors')}</span>
               </div>
               <h2 style="font-size:var(--font-size-base); margin-top:8px;">${getTranslation(lang, 'navVendors')}</h2>
               <p style="font-size:var(--font-size-xs); color:var(--color-text-muted); margin:10px 0;">
-                Questions, red flags & direct Google Maps discovery in ${event.city}.
+                ${getTranslation(lang, 'vendorGuides')} in ${event.city}.
               </p>
             </div>
-            <a href="#vendors" class="btn btn-subtle btn-sm" style="width:100%;">Vendor Guides ${getIcon('chevron_right')}</a>
+            <a href="#vendors" class="btn btn-subtle btn-sm" style="width:100%;">${getTranslation(lang, 'vendorGuides')} ${getIcon('chevron_right')}</a>
           </div>
 
           <!-- Ideas -->
@@ -1267,18 +1267,18 @@ class App {
               </div>
               <h2 style="font-size:var(--font-size-base); margin-top:8px;">${getTranslation(lang, 'navIdeas')}</h2>
               <p style="font-size:var(--font-size-xs); color:var(--color-text-muted); margin:10px 0;">
-                Curated themes, feast menus, and return favors for ${event.type}.
+                ${getTranslation(lang, 'exploreIdeas')} for ${event.type}.
               </p>
             </div>
-            <a href="#ideas" class="btn btn-subtle btn-sm" style="width:100%;">Explore Ideas ${getIcon('chevron_right')}</a>
+            <a href="#ideas" class="btn btn-subtle btn-sm" style="width:100%;">${getTranslation(lang, 'exploreIdeas')} ${getIcon('chevron_right')}</a>
           </div>
         </div>
 
         <!-- Export & Share Actions Card -->
         <div class="card" style="display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:12px;">
           <div>
-            <h3 style="font-size:var(--font-size-base);">Export & Calendar Integration</h3>
-            <p style="font-size:var(--font-size-xs); color:var(--color-text-muted);">Sync with your phone calendar or share details with guests.</p>
+            <h3 style="font-size:var(--font-size-base);">${getTranslation(lang, 'exportSection')}</h3>
+            <p style="font-size:var(--font-size-xs); color:var(--color-text-muted);">${getTranslation(lang, 'exportSub')}</p>
           </div>
           <div style="display:flex; flex-wrap:wrap; gap:8px;">
             <button class="btn btn-outline btn-sm" id="btn-export-ics">
@@ -1385,10 +1385,10 @@ class App {
           </div>
           <div style="display:flex; gap:8px;">
             <button type="button" class="btn ${!effectiveNeedsVenue ? 'btn-primary' : 'btn-outline'} btn-sm" id="btn-budget-venue-no">
-              🏠 No Venue (PG/Home)
+              ${getTranslation(lang, 'venueNo')}
             </button>
             <button type="button" class="btn ${effectiveNeedsVenue ? 'btn-primary' : 'btn-outline'} btn-sm" id="btn-budget-venue-yes">
-              🏢 Rent a Venue
+              ${getTranslation(lang, 'venueYes')}
             </button>
           </div>
         </div>
@@ -1405,7 +1405,7 @@ class App {
               }).join('')}
             </svg>
             <p style="font-size:var(--font-size-xs); color:var(--color-text-muted); margin-top:8px;">
-              Total Budget: <strong>${formatCurrency(stats.totalBudget, event.currency)}</strong>
+              ${getTranslation(lang, 'totalBudget')}: <strong>${formatCurrency(stats.totalBudget, event.currency)}</strong>
             </p>
           </div>
 
@@ -1430,16 +1430,16 @@ class App {
 
         <!-- Category Actual Spend Table -->
         <div class="card">
-          <h2 style="font-size:var(--font-size-base); margin-bottom:12px;">Category Spends & Variance Tracker</h2>
+          <h2 style="font-size:var(--font-size-base); margin-bottom:12px;">${getTranslation(lang, 'trackerTitle')}</h2>
           <div style="overflow-x:auto;">
             <table style="width:100%; border-collapse:collapse; font-size:var(--font-size-sm);" role="table">
               <thead>
                 <tr style="border-bottom:2px solid var(--color-border); text-align:left;">
-                  <th style="padding:8px 10px;">Category</th>
-                  <th style="padding:8px 10px;">Planned (%)</th>
-                  <th style="padding:8px 10px;">Planned (₹)</th>
-                  <th style="padding:8px 10px;">Actual Spent</th>
-                  <th style="padding:8px 10px;">Variance</th>
+                  <th style="padding:8px 10px;">${getTranslation(lang, 'tableCategory')}</th>
+                  <th style="padding:8px 10px;">${getTranslation(lang, 'tablePlannedPct')}</th>
+                  <th style="padding:8px 10px;">${getTranslation(lang, 'tablePlannedAmt')}</th>
+                  <th style="padding:8px 10px;">${getTranslation(lang, 'tableActual')}</th>
+                  <th style="padding:8px 10px;">${getTranslation(lang, 'tableVariance')}</th>
                 </tr>
               </thead>
               <tbody>
@@ -1458,7 +1458,7 @@ class App {
                         <input type="number" class="form-control actual-spend-input" data-id="${item.id}" value="${item.actualAmount || 0}" style="max-width:130px; min-height:34px; padding:4px 8px; font-size:var(--font-size-xs);" aria-label="Actual spend for ${item.category}" />
                       </td>
                       <td style="padding:10px; font-weight:700; color:${isOver ? 'var(--color-error)' : 'var(--color-success)'};">
-                        ${isOver ? '▲ Over ' : '▼ Saved '} ${formatCurrency(Math.abs(variance), event.currency)}
+                        ${isOver ? '▲ ' + getTranslation(lang, 'over') + ' ' : '▼ ' + getTranslation(lang, 'saved') + ' '} ${formatCurrency(Math.abs(variance), event.currency)}
                       </td>
                     </tr>
                   `;
