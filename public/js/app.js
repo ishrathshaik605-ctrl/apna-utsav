@@ -326,9 +326,11 @@ class App {
 
     form?.addEventListener('submit', (e) => {
       e.preventDefault();
-      let val = input.value.trim();
+      const val = input.value.trim();
       if (!val) {
-        val = "Kids Milestone Birthday in Bengaluru for 40 guests with ₹30,000 budget";
+        this.showToast('Please type your event details or tap a suggestion below!');
+        input.focus();
+        return;
       }
       closeModal();
       this.parseAndCreatePlan(val);
@@ -671,11 +673,15 @@ class App {
 
     const handleCreate = (e) => {
       if (e) e.preventDefault();
-      let val = input ? input.value.trim() : '';
+      const val = input ? input.value.trim() : '';
       if (!val) {
-        // Fall back to starter example prompt so clicking Create Plan ALWAYS creates a plan!
-        val = "Sister's wedding in Hyderabad for 200 guests with ₹10 Lakhs budget";
-        if (input) input.value = val;
+        this.showToast('Please type your celebration idea or tap an inspiration card below!');
+        if (input) {
+          input.focus();
+          input.style.borderColor = 'var(--color-primary)';
+          input.style.boxShadow = '0 0 0 3px var(--color-primary-subtle)';
+        }
+        return;
       }
       this.parseAndCreatePlan(val);
     };
