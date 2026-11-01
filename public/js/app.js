@@ -635,36 +635,253 @@ class App {
           ${getIcon('sparkles')} ${APP_CONFIG.NAME}
         </span>
         <h1 class="welcome-heading">${getTranslation(lang, 'welcomeTitle')}</h1>
-        <p class="welcome-subheading">${getTranslation(lang, 'welcomeSubtitle')}</p>
+        <p class="welcome-subheading">Choose our simple guided setup or describe your event with voice/text.</p>
 
-        <!-- ChatGPT Style Natural Language Prompt Bar -->
-        <form class="prompt-bar-card" id="welcome-prompt-form">
-          <input type="text" id="welcome-prompt-input" class="prompt-input-field" placeholder="${getTranslation(lang, 'promptPlaceholder')}" autocomplete="off" />
-          <button type="button" class="icon-btn" id="btn-welcome-mic" aria-label="Speak your event" title="Voice Input">
-            ${getIcon('mic')}
+        <!-- Mode Switcher Tabs: Guided Form vs AI Prompt -->
+        <div class="welcome-tabs-bar" role="tablist">
+          <button type="button" class="btn btn-sm btn-primary" id="btn-mode-guided" style="border-radius:var(--radius-full); padding:6px 18px; font-size:12px;">
+            📋 Step-by-Step Guided Setup
           </button>
-          <button type="submit" class="btn btn-primary btn-sm" style="border-radius:var(--radius-full);">
-            ${getTranslation(lang, 'btnCreatePlan')} ${getIcon('arrow_right')}
+          <button type="button" class="btn btn-sm btn-ghost" id="btn-mode-ai" style="border-radius:var(--radius-full); padding:6px 18px; font-size:12px;">
+            ✨ AI Prompt & Voice Mic
           </button>
-        </form>
+        </div>
 
-        <!-- Inspiration Starter Cards -->
-        <div class="inspiration-section">
-          <span class="inspiration-label">Or Tap an Inspiration Starter:</span>
-          <div class="inspiration-grid">
-            ${APP_CONFIG.INSPIRATION_CHIPS.map(chip => `
-              <div class="inspiration-chip-card" data-prompt="${chip.prompt}">
-                <div class="chip-title">
-                  <span>${chip.icon}</span>
-                  <span>${chip.title}</span>
-                </div>
-                <div class="chip-desc">${chip.prompt}</div>
+        <!-- 1. Guided Setup Form (Default for all users) -->
+        <div class="guided-builder-card" id="panel-guided-setup">
+          <!-- Step 1: Celebration Type -->
+          <span class="guided-step-label">1. Choose Celebration Type</span>
+          <div class="guided-type-grid" id="guided-type-selector">
+            <button type="button" class="guided-type-btn active" data-type="birthday">
+              <span class="emoji">🎂</span>
+              <span>Birthday</span>
+            </button>
+            <button type="button" class="guided-type-btn" data-type="wedding">
+              <span class="emoji">💍</span>
+              <span>Wedding</span>
+            </button>
+            <button type="button" class="guided-type-btn" data-type="housewarming">
+              <span class="emoji">🪔</span>
+              <span>Griha Pravesh</span>
+            </button>
+            <button type="button" class="guided-type-btn" data-type="community">
+              <span class="emoji">🎉</span>
+              <span>Community Utsav</span>
+            </button>
+          </div>
+
+          <!-- Step 2: City / Location -->
+          <div style="margin-bottom:16px;">
+            <label for="guided-field-city" class="guided-step-label">2. City / Location</label>
+            <input type="text" id="guided-field-city" class="form-control" value="Hyderabad" list="indian-cities-list" placeholder="e.g. Hyderabad, Bengaluru, Jaipur..." style="font-size:var(--font-size-sm); padding:10px 12px; width:100%; border-radius:var(--radius-md);" />
+            <datalist id="indian-cities-list">
+              <option value="Hyderabad"></option>
+              <option value="Bengaluru"></option>
+              <option value="Mumbai"></option>
+              <option value="Delhi"></option>
+              <option value="Jaipur"></option>
+              <option value="Pune"></option>
+              <option value="Chennai"></option>
+              <option value="Kolkata"></option>
+            </datalist>
+          </div>
+
+          <!-- Step 3: Guests & Budget Grid -->
+          <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:16px; margin-bottom:16px;">
+            <div>
+              <label for="guided-field-guests" class="guided-step-label">3. Number of Guests</label>
+              <input type="number" id="guided-field-guests" class="form-control" value="25" min="1" max="5000" style="font-size:var(--font-size-sm); padding:10px 12px; width:100%; border-radius:var(--radius-md);" />
+              <div class="guided-quick-pills" id="pills-guests">
+                <span class="guided-pill" data-val="4">4 (PG Room)</span>
+                <span class="guided-pill active" data-val="25">25</span>
+                <span class="guided-pill" data-val="50">50</span>
+                <span class="guided-pill" data-val="150">150</span>
+                <span class="guided-pill" data-val="300">300</span>
               </div>
-            `).join('')}
+            </div>
+
+            <div>
+              <label for="guided-field-budget" class="guided-step-label">4. Total Budget (₹)</label>
+              <input type="number" id="guided-field-budget" class="form-control" value="15000" min="100" step="50" style="font-size:var(--font-size-sm); padding:10px 12px; width:100%; border-radius:var(--radius-md);" />
+              <div class="guided-quick-pills" id="pills-budget">
+                <span class="guided-pill" data-val="1000">₹1,000 (PG)</span>
+                <span class="guided-pill active" data-val="15000">₹15,000</span>
+                <span class="guided-pill" data-val="50000">₹50,000</span>
+                <span class="guided-pill" data-val="500000">₹5 Lakh</span>
+                <span class="guided-pill" data-val="1500000">₹15 Lakh</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Step 4: Venue Requirement -->
+          <div style="margin-bottom:20px;">
+            <span class="guided-step-label">5. Venue Requirement</span>
+            <div style="display:flex; gap:10px; flex-wrap:wrap;">
+              <button type="button" class="btn btn-primary btn-sm" id="guided-venue-no" style="flex:1; border-radius:var(--radius-md); padding:10px; font-weight:600;">
+                🏠 No Venue (Home/PG/Own Space)
+              </button>
+              <button type="button" class="btn btn-outline btn-sm" id="guided-venue-yes" style="flex:1; border-radius:var(--radius-md); padding:10px; font-weight:600;">
+                🏢 Rent a Venue (Hall/Mandapam)
+              </button>
+            </div>
+          </div>
+
+          <!-- Submit Button -->
+          <button type="button" class="btn btn-primary" id="btn-create-guided-plan" style="width:100%; padding:14px; font-size:var(--font-size-sm); font-weight:700; border-radius:var(--radius-md); justify-content:center;">
+            🎉 Create Celebration Plan ➔
+          </button>
+        </div>
+
+        <!-- 2. AI Prompt & Voice Panel (For free-text lovers) -->
+        <div id="panel-ai-prompt" style="display:none; width:100%; max-width:640px;">
+          <!-- ChatGPT Style Natural Language Prompt Bar -->
+          <form class="prompt-bar-card" id="welcome-prompt-form" style="margin-bottom:24px;">
+            <input type="text" id="welcome-prompt-input" class="prompt-input-field" placeholder="${getTranslation(lang, 'promptPlaceholder')}" autocomplete="off" />
+            <button type="button" class="icon-btn" id="btn-welcome-mic" aria-label="Speak your event" title="Voice Input">
+              ${getIcon('mic')}
+            </button>
+            <button type="submit" class="btn btn-primary btn-sm" style="border-radius:var(--radius-full);">
+              ${getTranslation(lang, 'btnCreatePlan')} ${getIcon('arrow_right')}
+            </button>
+          </form>
+
+          <!-- Inspiration Starter Cards -->
+          <div class="inspiration-section">
+            <span class="inspiration-label">Or Tap an Inspiration Starter:</span>
+            <div class="inspiration-grid">
+              ${APP_CONFIG.INSPIRATION_CHIPS.map(chip => `
+                <div class="inspiration-chip-card" data-prompt="${chip.prompt}">
+                  <div class="chip-title">
+                    <span>${chip.icon}</span>
+                    <span>${chip.title}</span>
+                  </div>
+                  <div class="chip-desc">${chip.prompt}</div>
+                </div>
+              `).join('')}
+            </div>
           </div>
         </div>
       </section>
     `;
+
+    // Guided vs AI Tab Toggles
+    const btnGuided = this.viewContainer.querySelector('#btn-mode-guided');
+    const btnAI = this.viewContainer.querySelector('#btn-mode-ai');
+    const panelGuided = this.viewContainer.querySelector('#panel-guided-setup');
+    const panelAI = this.viewContainer.querySelector('#panel-ai-prompt');
+
+    btnGuided?.addEventListener('click', () => {
+      btnGuided.className = 'btn btn-sm btn-primary';
+      btnAI.className = 'btn btn-sm btn-ghost';
+      panelGuided.style.display = 'block';
+      panelAI.style.display = 'none';
+    });
+
+    btnAI?.addEventListener('click', () => {
+      btnAI.className = 'btn btn-sm btn-primary';
+      btnGuided.className = 'btn btn-sm btn-ghost';
+      panelAI.style.display = 'block';
+      panelGuided.style.display = 'none';
+      const aiInput = this.viewContainer.querySelector('#welcome-prompt-input');
+      if (aiInput) aiInput.focus();
+    });
+
+    // Guided Form State Variables
+    let selectedType = 'birthday';
+    let needsVenue = false;
+
+    // Type Selector Buttons
+    this.viewContainer.querySelectorAll('.guided-type-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        this.viewContainer.querySelectorAll('.guided-type-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        selectedType = btn.dataset.type;
+
+        // Auto-adjust default guests & budget for selected type
+        const guestsInput = this.viewContainer.querySelector('#guided-field-guests');
+        const budgetInput = this.viewContainer.querySelector('#guided-field-budget');
+        const venueNoBtn = this.viewContainer.querySelector('#guided-venue-no');
+        const venueYesBtn = this.viewContainer.querySelector('#guided-venue-yes');
+
+        if (selectedType === 'wedding') {
+          if (guestsInput) guestsInput.value = 200;
+          if (budgetInput) budgetInput.value = 1000000;
+          needsVenue = true;
+          venueYesBtn?.classList.replace('btn-outline', 'btn-primary');
+          venueNoBtn?.classList.replace('btn-primary', 'btn-outline');
+        } else if (selectedType === 'birthday') {
+          if (guestsInput) guestsInput.value = 25;
+          if (budgetInput) budgetInput.value = 15000;
+          needsVenue = false;
+          venueNoBtn?.classList.replace('btn-outline', 'btn-primary');
+          venueYesBtn?.classList.replace('btn-primary', 'btn-outline');
+        } else if (selectedType === 'housewarming') {
+          if (guestsInput) guestsInput.value = 50;
+          if (budgetInput) budgetInput.value = 40000;
+          needsVenue = false;
+          venueNoBtn?.classList.replace('btn-outline', 'btn-primary');
+          venueYesBtn?.classList.replace('btn-primary', 'btn-outline');
+        } else if (selectedType === 'community') {
+          if (guestsInput) guestsInput.value = 100;
+          if (budgetInput) budgetInput.value = 60000;
+          needsVenue = false;
+          venueNoBtn?.classList.replace('btn-outline', 'btn-primary');
+          venueYesBtn?.classList.replace('btn-primary', 'btn-outline');
+        }
+      });
+    });
+
+    // Venue Toggle Buttons in Guided Form
+    const venueNoBtn = this.viewContainer.querySelector('#guided-venue-no');
+    const venueYesBtn = this.viewContainer.querySelector('#guided-venue-yes');
+
+    venueNoBtn?.addEventListener('click', () => {
+      needsVenue = false;
+      venueNoBtn.classList.replace('btn-outline', 'btn-primary');
+      venueYesBtn.classList.replace('btn-primary', 'btn-outline');
+    });
+
+    venueYesBtn?.addEventListener('click', () => {
+      needsVenue = true;
+      venueYesBtn.classList.replace('btn-outline', 'btn-primary');
+      venueNoBtn.classList.replace('btn-primary', 'btn-outline');
+    });
+
+    // Quick Pills for Guests
+    this.viewContainer.querySelectorAll('#pills-guests .guided-pill').forEach(pill => {
+      pill.addEventListener('click', () => {
+        this.viewContainer.querySelectorAll('#pills-guests .guided-pill').forEach(p => p.classList.remove('active'));
+        pill.classList.add('active');
+        const input = this.viewContainer.querySelector('#guided-field-guests');
+        if (input) input.value = pill.dataset.val;
+      });
+    });
+
+    // Quick Pills for Budget
+    this.viewContainer.querySelectorAll('#pills-budget .guided-pill').forEach(pill => {
+      pill.addEventListener('click', () => {
+        this.viewContainer.querySelectorAll('#pills-budget .guided-pill').forEach(p => p.classList.remove('active'));
+        pill.classList.add('active');
+        const input = this.viewContainer.querySelector('#guided-field-budget');
+        if (input) input.value = pill.dataset.val;
+      });
+    });
+
+    // Submit Guided Form Button
+    const btnCreateGuided = this.viewContainer.querySelector('#btn-create-guided-plan');
+    btnCreateGuided?.addEventListener('click', () => {
+      const city = this.viewContainer.querySelector('#guided-field-city')?.value?.trim() || 'Hyderabad';
+      const guestCount = parseInt(this.viewContainer.querySelector('#guided-field-guests')?.value || '25', 10);
+      const totalBudget = parseInt(this.viewContainer.querySelector('#guided-field-budget')?.value || '15000', 10);
+
+      this.createGuidedPlan({
+        type: selectedType,
+        city,
+        guestCount,
+        totalBudget,
+        needsVenue
+      });
+    });
 
     // Prompt Form Submit & Create Plan Button
     const form = this.viewContainer.querySelector('#welcome-prompt-form');
@@ -720,6 +937,53 @@ class App {
         rec.start();
       });
     }
+  }
+
+  /**
+   * Directly creates celebration plan from guided visual form
+   */
+  createGuidedPlan({ type, title, city, guestCount, totalBudget, needsVenue }) {
+    const isMicro = totalBudget <= 5000 && guestCount <= 10;
+    const categories = getCategoriesForEvent(type, isMicro, needsVenue);
+    const futureDate = new Date();
+    futureDate.setDate(futureDate.getDate() + (type === 'wedding' ? 75 : (isMicro ? 14 : 30)));
+    const targetDateStr = futureDate.toISOString().split('T')[0];
+
+    const typeTitles = {
+      wedding: `${city} Grand Vivaham & Wedding`,
+      birthday: isMicro ? `${city} Intimate PG Birthday` : `${city} Milestone Birthday Celebration`,
+      housewarming: `${city} Auspicious Griha Pravesh`,
+      community: `${city} Festival & Community Utsav`
+    };
+
+    const newPlan = {
+      event: {
+        id: 'evt_' + Date.now(),
+        type,
+        title: title || typeTitles[type] || `${city} Celebration`,
+        date: targetDateStr,
+        city,
+        guestCount,
+        currency: 'INR',
+        language: store.state.language || 'en',
+        dietary: isMicro ? ['Favorite Snacks', 'Biryani / Pizza'] : ['Traditional Feast', 'Pure Vegetarian'],
+        style: isMicro ? ['Cozy PG Room Vibes', 'Warm Fairy Lights'] : ['Traditional & Elegant', 'Warm Lighting'],
+        totalBudget,
+        isMicro,
+        needsVenue,
+        createdAt: new Date().toISOString()
+      },
+      budgetItems: computeBudgetSplit(totalBudget, categories),
+      tasks: computeTimelineTasks(targetDateStr, type, isMicro, needsVenue),
+      vendors: [],
+      ideas: getIdeasForEventType(type, isMicro)
+    };
+
+    store.addEvent(newPlan);
+    this.showToast(`Celebration plan "${newPlan.event.title}" created for ${city}!`);
+    this.currentTab = 'dashboard';
+    window.location.hash = '#dashboard';
+    this.render();
   }
 
   /**
