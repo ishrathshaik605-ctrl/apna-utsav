@@ -27,6 +27,7 @@ class App {
 
   init() {
     this.initTheme();
+    this.initLanguageSwitcher();
     this.renderStaticIcons();
     this.initDrawer();
     this.initAddEventModal();
@@ -90,6 +91,78 @@ class App {
         document.documentElement.setAttribute('data-theme', next);
         localStorage.setItem('apna_utsav_v2_theme', next);
         document.getElementById('theme-icon-placeholder').innerHTML = getIcon(next === 'dark' ? 'theme_light' : 'theme_dark');
+      });
+    }
+  }
+
+  // --- 2.5 LANGUAGE SWITCHER CONTROLLER ---
+  initLanguageSwitcher() {
+    const langBtn = document.getElementById('btn-header-lang');
+    const dropdown = document.getElementById('header-lang-dropdown');
+    const label = document.getElementById('header-lang-label');
+    const drawerSelect = document.getElementById('drawer-lang-dropdown-select');
+
+    const langNames = {
+      en: 'English',
+      hi: 'हिन्दी',
+      te: 'తెలుగు',
+      kn: 'ಕನ್ನಡ',
+      ta: 'தமிழ்'
+    };
+
+    const updateLangUI = (code) => {
+      if (label) label.textContent = langNames[code] || 'English';
+      if (drawerSelect) drawerSelect.value = code;
+      document.querySelectorAll('.lang-item').forEach(item => {
+        item.classList.toggle('active', item.dataset.lang === code);
+      });
+      // Update HTML lang attribute
+      document.documentElement.setAttribute('lang', code);
+    };
+
+    const currentLang = store.state.language || store.getState().language || 'en';
+    updateLangUI(currentLang);
+
+    if (langBtn && dropdown) {
+      langBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const isOpen = dropdown.classList.contains('open');
+        dropdown.classList.toggle('open', !isOpen);
+        langBtn.setAttribute('aria-expanded', String(!isOpen));
+      });
+
+      document.addEventListener('click', (e) => {
+        if (!e.target.closest('.header-lang-wrapper')) {
+          dropdown.classList.remove('open');
+          langBtn.setAttribute('aria-expanded', 'false');
+        }
+      });
+    }
+
+    document.querySelectorAll('.lang-item').forEach(item => {
+      item.addEventListener('click', () => {
+        const selected = item.getAttribute('data-lang');
+        if (selected) {
+          store.setLanguage(selected);
+          updateLangUI(selected);
+          dropdown?.classList.remove('open');
+          langBtn?.setAttribute('aria-expanded', 'false');
+          this.showToast(`Language switched to ${langNames[selected] || selected}`);
+          this.render();
+        }
+      });
+    });
+
+    if (drawerSelect) {
+      drawerSelect.addEventListener('change', (e) => {
+        const selected = e.target.value;
+        if (selected) {
+          store.setLanguage(selected);
+          updateLangUI(selected);
+          this.showToast(`Language switched to ${langNames[selected] || selected}`);
+          this.render();
+          document.getElementById('drawer-backdrop')?.classList.remove('open');
+        }
       });
     }
   }
@@ -253,11 +326,12 @@ class App {
 
     form?.addEventListener('submit', (e) => {
       e.preventDefault();
-      const val = input.value.trim();
-      if (val) {
-        closeModal();
-        this.parseAndCreatePlan(val);
+      let val = input.value.trim();
+      if (!val) {
+        val = "Kids Milestone Birthday in Bengaluru for 40 guests with ₹30,000 budget";
       }
+      closeModal();
+      this.parseAndCreatePlan(val);
     });
 
     document.querySelectorAll('.add-event-suggestion-chip').forEach(chip => {
@@ -501,7 +575,17 @@ class App {
   // --- 7. MAIN RENDER ROUTE ---
   render() {
     const state = store.getState();
-    const lang = state.event?.language || 'en';
+    const lang = state.language || state.event?.language || store.state.language || 'en';
+
+    // Sync Header and Drawer language indicators
+    const langNames = { en: 'English', hi: 'हिन्दी', te: 'తెలుగు', kn: 'ಕನ್ನಡ', ta: 'தமிழ்' };
+    const label = document.getElementById('header-lang-label');
+    if (label) label.textContent = langNames[lang] || 'English';
+    const drawerSelect = document.getElementById('drawer-lang-dropdown-select');
+    if (drawerSelect) drawerSelect.value = lang;
+    document.querySelectorAll('.lang-item').forEach(item => {
+      item.classList.toggle('active', item.dataset.lang === lang);
+    });
 
     // Localize static text
     document.querySelectorAll('[data-i18n]').forEach(el => {
@@ -580,17 +664,24 @@ class App {
       </section>
     `;
 
-    // Prompt Form Submit
+    // Prompt Form Submit & Create Plan Button
     const form = this.viewContainer.querySelector('#welcome-prompt-form');
     const input = this.viewContainer.querySelector('#welcome-prompt-input');
+    const submitBtn = this.viewContainer.querySelector('#welcome-prompt-form button[type="submit"]');
 
-    form?.addEventListener('submit', (e) => {
-      e.preventDefault();
-      const val = input.value.trim();
-      if (val) {
-        this.parseAndCreatePlan(val);
+    const handleCreate = (e) => {
+      if (e) e.preventDefault();
+      let val = input ? input.value.trim() : '';
+      if (!val) {
+        // Fall back to starter example prompt so clicking Create Plan ALWAYS creates a plan!
+        val = "Sister's wedding in Hyderabad for 200 guests with ₹10 Lakhs budget";
+        if (input) input.value = val;
       }
-    });
+      this.parseAndCreatePlan(val);
+    };
+
+    form?.addEventListener('submit', handleCreate);
+    submitBtn?.addEventListener('click', handleCreate);
 
     // Inspiration chip click
     this.viewContainer.querySelectorAll('.inspiration-chip-card').forEach(card => {
@@ -732,7 +823,7 @@ class App {
         city,
         guestCount,
         currency: 'INR',
-        language: 'en',
+        language: store.state.language || 'en',
         dietary: isMicro ? ['Favorite Snacks', 'Biryani / Pizza'] : ['Traditional Feast', 'Pure Vegetarian'],
         style: isMicro ? ['Cozy PG Room Vibes', 'Warm Fairy Lights'] : ['Traditional & Elegant', 'Warm Lighting'],
         totalBudget,
@@ -749,7 +840,9 @@ class App {
     // Save as additional celebration without overwriting previous ones!
     store.addEvent(newPlan);
     this.showToast(`Celebration plan "${title}" created for ${city}!`);
+    this.currentTab = 'dashboard';
     window.location.hash = '#dashboard';
+    this.render();
   }
 
   // =========================================================================

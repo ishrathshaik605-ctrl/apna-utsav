@@ -43,6 +43,32 @@
       </div>
 
       <div class="header-right">
+        <!-- Language Switcher Navigation Link -->
+        <div class="header-lang-wrapper" style="position:relative;">
+          <button class="icon-btn-pill" id="btn-header-lang" aria-label="Change Language" title="Change Language" aria-haspopup="true" aria-expanded="false">
+            <span style="font-size:14px;">🌐</span>
+            <span id="header-lang-label">English</span>
+            <span style="font-size:9px; opacity:0.7;">▼</span>
+          </button>
+          <div class="lang-dropdown-panel" id="header-lang-dropdown" role="menu" aria-label="Choose Language">
+            <button type="button" class="lang-item active" data-lang="en" role="menuitem">
+              <span>🇬🇧</span> <span>English</span>
+            </button>
+            <button type="button" class="lang-item" data-lang="hi" role="menuitem">
+              <span>🇮🇳</span> <span>हिन्दी (Hindi)</span>
+            </button>
+            <button type="button" class="lang-item" data-lang="te" role="menuitem">
+              <span>🇮🇳</span> <span>తెలుగు (Telugu)</span>
+            </button>
+            <button type="button" class="lang-item" data-lang="kn" role="menuitem">
+              <span>🇮🇳</span> <span>ಕನ್ನಡ (Kannada)</span>
+            </button>
+            <button type="button" class="lang-item" data-lang="ta" role="menuitem">
+              <span>🇮🇳</span> <span>தமிழ் (Tamil)</span>
+            </button>
+          </div>
+        </div>
+
         <!-- Event Settings Button (Always accessible to tweak parameters) -->
         <button class="icon-btn" id="btn-header-settings" aria-label="Event settings" title="Event Settings">
           <span id="settings-icon-placeholder"></span>
@@ -99,6 +125,20 @@
           <span class="nav-icon-slot" data-icon="settings"></span>
           <span data-i18n="navSettings">Settings</span>
         </a>
+
+        <!-- Drawer Language Navigation Link -->
+        <div class="drawer-lang-selector" style="padding:10px 16px; margin:6px 0; border-top:1px solid var(--color-border-subtle); border-bottom:1px solid var(--color-border-subtle);">
+          <label for="drawer-lang-dropdown-select" style="font-size:11px; font-weight:700; color:var(--color-text-muted); text-transform:uppercase; letter-spacing:0.04em; display:flex; align-items:center; gap:6px; margin-bottom:6px;">
+            <span>🌐</span> <span data-i18n="navLanguage">Language / भाषा</span>
+          </label>
+          <select id="drawer-lang-dropdown-select" class="form-control" style="font-size:13px; padding:6px 10px; width:100%; border-radius:var(--radius-sm); background:var(--color-surface); color:var(--color-text); border:1px solid var(--color-border);">
+            <option value="en">English (English)</option>
+            <option value="hi">हिन्दी (Hindi)</option>
+            <option value="te">తెలుగు (Telugu)</option>
+            <option value="kn">ಕನ್ನಡ (Kannada)</option>
+            <option value="ta">தமிழ் (Tamil)</option>
+          </select>
+        </div>
       </nav>
 
       <!-- Multi-Event Celebrations Manager Section -->

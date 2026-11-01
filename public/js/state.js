@@ -11,7 +11,8 @@ export const INITIAL_EMPTY_STATE = {
   version: SCHEMA_VERSION,
   events: [], // Array of celebration plans
   activeEventId: null,
-  activeTab: 'dashboard'
+  activeTab: 'dashboard',
+  language: 'en'
 };
 
 class StateStore {
@@ -108,15 +109,30 @@ class StateStore {
    */
   getState() {
     const active = this.getActivePlan();
+    const language = active?.event?.language || this.state.language || 'en';
     return {
       ...this.state,
+      language,
       hasActivePlan: Boolean(active),
-      event: active?.event || null,
+      event: active ? { ...active.event, language } : null,
       budgetItems: active?.budgetItems || [],
       tasks: active?.tasks || [],
       vendors: active?.vendors || [],
       ideas: active?.ideas || []
     };
+  }
+
+  /**
+   * Set application language and sync with active celebration
+   */
+  setLanguage(lang) {
+    this.pushHistory();
+    this.state.language = lang;
+    const active = this.getActivePlan();
+    if (active && active.event) {
+      active.event.language = lang;
+    }
+    this.saveState();
   }
 
   /**
