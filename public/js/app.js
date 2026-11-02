@@ -50,9 +50,6 @@ class App {
   setupGlobalErrorBoundaries() {
     window.addEventListener('error', (event) => {
       console.error('[Apna Utsav Runtime Boundary]', event.error || event.message);
-      if (event.filename && event.filename.includes('/js/')) {
-        this.showToast('⚠️ Handled a temporary interface hiccup.');
-      }
     });
 
     window.addEventListener('unhandledrejection', (event) => {
