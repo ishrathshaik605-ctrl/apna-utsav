@@ -267,7 +267,7 @@
   <div class="modal-overlay" id="settings-modal-overlay" role="dialog" aria-modal="true" aria-labelledby="settings-modal-title" aria-hidden="true">
     <div class="modal-sheet-panel">
       <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:18px;">
-        <h2 id="settings-modal-title" style="font-size:var(--font-size-lg);">Event Setup & Settings</h2>
+        <h2 id="settings-modal-title" style="font-size:var(--font-size-lg);" data-i18n="settingsTitle">Event Setup & Settings</h2>
         <button class="icon-btn-sm" id="btn-close-settings-modal" aria-label="Close settings">
           <span id="settings-close-icon-slot"></span>
         </button>
@@ -275,28 +275,28 @@
 
       <form id="event-settings-form" novalidate>
         <div class="form-field">
-          <label class="form-label" for="field-event-title">Celebration Title</label>
+          <label class="form-label" for="field-event-title" data-i18n="fieldTitle">Celebration Title</label>
           <input type="text" id="field-event-title" class="form-control" />
         </div>
 
         <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
           <div class="form-field">
-            <label class="form-label" for="field-event-city">City</label>
+            <label class="form-label" for="field-event-city" data-i18n="fieldCity">City</label>
             <input type="text" id="field-event-city" class="form-control" />
           </div>
           <div class="form-field">
-            <label class="form-label" for="field-event-date">Target Date</label>
+            <label class="form-label" for="field-event-date" data-i18n="fieldDate">Target Date</label>
             <input type="date" id="field-event-date" class="form-control" />
           </div>
         </div>
 
         <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
           <div class="form-field">
-            <label class="form-label" for="field-guest-count">Guest Count</label>
+            <label class="form-label" for="field-guest-count" data-i18n="fieldGuests">Guest Count</label>
             <input type="number" id="field-guest-count" class="form-control" min="1" max="10000" />
           </div>
           <div class="form-field">
-            <label class="form-label" for="field-total-budget">Total Budget (₹)</label>
+            <label class="form-label" for="field-total-budget" data-i18n="fieldBudget">Total Budget (₹)</label>
             <input type="number" id="field-total-budget" class="form-control" step="50" min="100" placeholder="e.g. 1000" />
             <small style="font-size:11px; color:var(--color-text-muted); display:block; margin-top:4px;">Supports all celebration budgets from ₹100 upwards (PG bashes to grand weddings).</small>
           </div>
@@ -304,22 +304,22 @@
 
         <!-- Venue Requirement Selection (Home/PG vs Rented Hall) -->
         <div class="form-field" style="margin-top:6px; margin-bottom:12px; background:var(--color-surface-subtle); padding:12px; border-radius:var(--radius-md); border:1px solid var(--color-border);">
-          <label class="form-label" style="margin-bottom:8px; font-weight:700;">Do you need to rent a venue?</label>
+          <label class="form-label" style="margin-bottom:8px; font-weight:700;" data-i18n="fieldVenueQuestion">Do you need to rent a venue?</label>
           <div style="display:flex; flex-direction:column; gap:8px;">
             <label style="display:flex; align-items:center; gap:8px; font-size:var(--font-size-sm); cursor:pointer;">
               <input type="radio" name="field-needs-venue" value="no" id="venue-opt-no" checked />
-              <span>🏠 <strong>No</strong> — Celebrating at PG, Hostel room, or Home (₹0 Venue Rent)</span>
+              <span data-i18n="fieldVenueNo">🏠 <strong>No</strong> — Celebrating at PG, Hostel room, or Home (₹0 Venue Rent)</span>
             </label>
             <label style="display:flex; align-items:center; gap:8px; font-size:var(--font-size-sm); cursor:pointer;">
               <input type="radio" name="field-needs-venue" value="yes" id="venue-opt-yes" />
-              <span>🏢 <strong>Yes</strong> — Need to rent a Banquet Hall, Party Hall, or Lawn</span>
+              <span data-i18n="fieldVenueYes">🏢 <strong>Yes</strong> — Need to rent a Banquet Hall, Party Hall, or Lawn</span>
             </label>
           </div>
         </div>
 
         <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
           <div class="form-field">
-            <label class="form-label" for="field-language">Language</label>
+            <label class="form-label" for="field-language" data-i18n="fieldLanguage">Language</label>
             <select id="field-language" class="form-control">
               <option value="en">English</option>
               <option value="hi">हिन्दी (Hindi)</option>
@@ -329,7 +329,7 @@
             </select>
           </div>
           <div class="form-field">
-            <label class="form-label" for="field-currency">Currency</label>
+            <label class="form-label" for="field-currency" data-i18n="fieldCurrency">Currency</label>
             <select id="field-currency" class="form-control">
               <option value="INR">₹ (INR)</option>
               <option value="USD">$ (USD)</option>
@@ -340,8 +340,8 @@
         </div>
 
         <div style="display:flex; justify-content:flex-end; gap:10px; margin-top:20px; padding-top:14px; border-top:1px solid var(--color-border);">
-          <button type="button" class="btn btn-outline" id="btn-cancel-settings">Cancel</button>
-          <button type="submit" class="btn btn-primary">Save Changes</button>
+          <button type="button" class="btn btn-outline" id="btn-cancel-settings" data-i18n="btnCancel">Cancel</button>
+          <button type="submit" class="btn btn-primary" data-i18n="btnSave">Save Changes</button>
         </div>
       </form>
     </div>
@@ -352,8 +352,8 @@
     <div class="modal-sheet-panel">
       <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px;">
         <div>
-          <h2 id="add-event-modal-title" style="font-size:var(--font-size-lg);">Plan Another Celebration</h2>
-          <p style="font-size:12px; color:var(--color-text-muted); margin-top:2px;">Add a new event without replacing your existing celebration plans.</p>
+          <h2 id="add-event-modal-title" style="font-size:var(--font-size-lg);" data-i18n="addEventTitle">Plan Another Celebration</h2>
+          <p style="font-size:12px; color:var(--color-text-muted); margin-top:2px;" data-i18n="addEventSub">Add a new event without replacing your existing celebration plans.</p>
         </div>
         <button class="icon-btn-sm" id="btn-close-add-event-modal" aria-label="Close add event dialog">
           <span id="add-event-close-icon-slot"></span>
@@ -362,17 +362,17 @@
 
       <form id="add-event-prompt-form" style="margin-bottom:16px;">
         <div class="prompt-bar-card" style="margin-bottom:12px;">
-          <input type="text" id="add-event-prompt-input" class="prompt-input-field" placeholder="e.g. cousin's Birthday in PG, 4 friends, ₹1000 budget" autocomplete="off" />
+          <input type="text" id="add-event-prompt-input" class="prompt-input-field" placeholder="e.g. cousin's Birthday in PG, 4 friends, ₹1000 budget" data-i18n-placeholder="addEventPlaceholder" autocomplete="off" />
           <button type="button" class="icon-btn" id="btn-add-event-mic" aria-label="Speak your event" title="Voice Input">
             <span id="add-event-mic-icon-slot"></span>
           </button>
-          <button type="submit" class="btn btn-primary btn-sm" style="border-radius:var(--radius-full); padding:0 18px;">
+          <button type="submit" class="btn btn-primary btn-sm" style="border-radius:var(--radius-full); padding:0 18px;" data-i18n="btnCreate">
             Create
           </button>
         </div>
       </form>
 
-      <span style="font-size:11px; font-weight:700; color:var(--color-text-muted); text-transform:uppercase; letter-spacing:0.05em; display:block; margin-bottom:8px;">Quick Suggestions:</span>
+      <span style="font-size:11px; font-weight:700; color:var(--color-text-muted); text-transform:uppercase; letter-spacing:0.05em; display:block; margin-bottom:8px;" data-i18n="quickSuggestions">Quick Suggestions:</span>
       <div class="inspiration-grid" style="grid-template-columns:1fr; gap:8px;">
         <div class="inspiration-chip-card add-event-suggestion-chip" data-prompt="Cousin's Birthday in Bengaluru PG, 4 friends, ₹1000 budget">
           <div class="chip-title"><span>🎂</span><strong>PG Birthday Bash (₹1,000)</strong></div>
@@ -395,14 +395,14 @@
     <span id="toast-message-text">Update saved</span>
   </div>
 
-  <!-- App Orchestrator Script -->
-  <script type="module" src="/js/app.js"></script>
+  <!-- App Orchestrator Script with Cache Busting -->
+  <script type="module" src="/js/app.js?v=20261102"></script>
 
   <!-- PWA Service Worker Registration with Instant Cache Purge -->
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/sw.js?v=10').then(reg => {
+        navigator.serviceWorker.register('/sw.js?v=20261102').then(reg => {
           reg.update();
         }).catch(err => {
           console.warn('SW register skipped:', err);

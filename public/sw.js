@@ -1,4 +1,4 @@
-const CACHE_NAME = 'apna-utsav-v10';
+const CACHE_NAME = 'apna-utsav-v12';
 const ASSETS_TO_CACHE = [
   '/',
   '/index.html',

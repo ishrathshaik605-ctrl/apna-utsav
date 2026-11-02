@@ -4,7 +4,7 @@
  * Deterministic Financial Calculations | Event-Specific Dynamic Ideas
  */
 
-import { APP_CONFIG } from './config.js';
+import { APP_CONFIG, getLocalizedInspirationChips } from './config.js';
 import { getIcon } from './icons.js';
 import { getTranslation } from './translations.js';
 import { store, INITIAL_EMPTY_STATE } from './state.js';
@@ -608,6 +608,12 @@ class App {
       el.textContent = getTranslation(lang, key);
     });
 
+    // Localize placeholder attributes
+    document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+      const key = el.getAttribute('data-i18n-placeholder');
+      el.setAttribute('placeholder', getTranslation(lang, key));
+    });
+
     // If zero active plan exists, render ChatGPT-style clean welcome screen
     if (!state.hasActivePlan || !state.event) {
       this.renderWelcomeScreen(lang);
@@ -719,7 +725,7 @@ class App {
               <label for="guided-field-guests" class="guided-step-label">${getTranslation(lang, 'stepGuests')}</label>
               <input type="number" id="guided-field-guests" class="form-control" value="25" min="1" max="5000" style="font-size:var(--font-size-sm); padding:10px 12px; width:100%; border-radius:var(--radius-md);" />
               <div class="guided-quick-pills" id="pills-guests">
-                <span class="guided-pill" data-val="4">4 (PG Room)</span>
+                <span class="guided-pill" data-val="4">${getTranslation(lang, 'pillPgRoom')}</span>
                 <span class="guided-pill active" data-val="25">25</span>
                 <span class="guided-pill" data-val="50">50</span>
                 <span class="guided-pill" data-val="150">150</span>
@@ -731,11 +737,11 @@ class App {
               <label for="guided-field-budget" class="guided-step-label">${getTranslation(lang, 'stepBudget')}</label>
               <input type="number" id="guided-field-budget" class="form-control" value="15000" min="100" step="50" style="font-size:var(--font-size-sm); padding:10px 12px; width:100%; border-radius:var(--radius-md);" />
               <div class="guided-quick-pills" id="pills-budget">
-                <span class="guided-pill" data-val="1000">₹1,000 (PG)</span>
+                <span class="guided-pill" data-val="1000">${getTranslation(lang, 'pillPgBudget')}</span>
                 <span class="guided-pill active" data-val="15000">₹15,000</span>
                 <span class="guided-pill" data-val="50000">₹50,000</span>
-                <span class="guided-pill" data-val="500000">₹5 Lakh</span>
-                <span class="guided-pill" data-val="1500000">₹15 Lakh</span>
+                <span class="guided-pill" data-val="500000">${getTranslation(lang, 'pill5Lakh')}</span>
+                <span class="guided-pill" data-val="1500000">${getTranslation(lang, 'pill15Lakh')}</span>
               </div>
             </div>
           </div>
@@ -776,7 +782,7 @@ class App {
           <div class="inspiration-section">
             <span class="inspiration-label">${getTranslation(lang, 'orInspiration')}</span>
             <div class="inspiration-grid">
-              ${APP_CONFIG.INSPIRATION_CHIPS.map(chip => `
+              ${getLocalizedInspirationChips(lang).map(chip => `
                 <div class="inspiration-chip-card" data-prompt="${chip.prompt}">
                   <div class="chip-title">
                     <span>${chip.icon}</span>
