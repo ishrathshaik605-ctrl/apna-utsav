@@ -26,6 +26,7 @@ class App {
   }
 
   init() {
+    this.setupGlobalErrorBoundaries();
     this.initTheme();
     this.initLanguageSwitcher();
     this.renderStaticIcons();
@@ -43,6 +44,21 @@ class App {
     // Handle hash routing
     window.addEventListener('hashchange', () => this.handleRoute());
     this.handleRoute();
+  }
+
+  // --- GLOBAL ERROR BOUNDARIES & RUNTIME RESILIENCE ---
+  setupGlobalErrorBoundaries() {
+    window.addEventListener('error', (event) => {
+      console.error('[Apna Utsav Runtime Boundary]', event.error || event.message);
+      if (event.filename && event.filename.includes('/js/')) {
+        this.showToast('⚠️ Handled a temporary interface hiccup.');
+      }
+    });
+
+    window.addEventListener('unhandledrejection', (event) => {
+      console.warn('[Apna Utsav Unhandled Rejection Boundary]', event.reason);
+      event.preventDefault();
+    });
   }
 
   // --- 1. RENDER GUARANTEED VECTOR ICONS (Zero text ligatures) ---
@@ -602,26 +618,40 @@ class App {
     }
 
     // Active plan views
-    switch (this.currentTab) {
-      case 'budget':
-        this.renderBudgetView(state, lang);
-        break;
-      case 'timeline':
-        this.renderTimelineView(state, lang);
-        break;
-      case 'vendors':
-        this.renderVendorsView(state, lang);
-        break;
-      case 'ideas':
-        this.renderIdeasView(state, lang);
-        break;
-      case 'settings':
-        this.renderSettingsPageView(state, lang);
-        break;
-      case 'dashboard':
-      default:
-        this.renderDashboardView(state, lang);
-        break;
+    try {
+      switch (this.currentTab) {
+        case 'budget':
+          this.renderBudgetView(state, lang);
+          break;
+        case 'timeline':
+          this.renderTimelineView(state, lang);
+          break;
+        case 'vendors':
+          this.renderVendorsView(state, lang);
+          break;
+        case 'ideas':
+          this.renderIdeasView(state, lang);
+          break;
+        case 'settings':
+          this.renderSettingsPageView(state, lang);
+          break;
+        case 'dashboard':
+        default:
+          this.renderDashboardView(state, lang);
+          break;
+      }
+    } catch (renderError) {
+      console.error('[Render Fallback Boundary]', renderError);
+      this.viewContainer.innerHTML = `
+        <div class="card" style="padding:24px; text-align:center; max-width:500px; margin:40px auto;">
+          <div style="font-size:36px; margin-bottom:12px;">🛡️</div>
+          <h2 style="font-size:18px; margin-bottom:8px;">View Render Notice</h2>
+          <p style="color:var(--color-text-muted); font-size:13px; margin-bottom:16px;">We caught an unexpected display issue. Your saved celebration data is safe.</p>
+          <button type="button" class="btn btn-primary btn-sm" onclick="window.location.hash='#dashboard'; window.location.reload();">
+            Reload Dashboard
+          </button>
+        </div>
+      `;
     }
   }
 

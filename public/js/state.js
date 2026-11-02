@@ -24,6 +24,9 @@ class StateStore {
 
   loadState() {
     try {
+      if (typeof localStorage === 'undefined') {
+        return JSON.parse(JSON.stringify(INITIAL_EMPTY_STATE));
+      }
       const raw = localStorage.getItem(STORAGE_KEY);
       if (!raw) {
         // Try migrating from v2 single-event state if present
@@ -70,7 +73,9 @@ class StateStore {
 
   saveState() {
     try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(this.state));
+      if (typeof localStorage !== 'undefined') {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(this.state));
+      }
     } catch (e) {
       console.error('Storage full or error saving state:', e);
     }
